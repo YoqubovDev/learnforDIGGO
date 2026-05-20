@@ -972,20 +972,20 @@
                     <div class="quiz-card-icon">📚</div>
                     <h3>Teglar Quizi</h3>
                     <p>HTML teglariga oid bilimlaringizni sinab ko'ring.</p>
-                    <button class="quiz-card-btn">Boshlash</button>
+                    <button class="quiz-card-btn" onclick="startQuiz('tags'); event.stopPropagation();">Boshlash</button>
                 </div>
                 <div class="quiz-menu-card" onclick="startQuiz('attributes')">
                     <div class="quiz-card-icon">🎛️</div>
                     <h3>Atributlar Quizi</h3>
                     <p>HTML teglari atributlari bo'yicha bilimlaringizni sinab ko'ring.</p>
-                    <button class="quiz-card-btn">Boshlash</button>
+                    <button class="quiz-card-btn" onclick="startQuiz('attributes'); event.stopPropagation();">Boshlash</button>
                 </div>
                 <div class="quiz-menu-card daily" onclick="startQuiz('daily')">
                     <div class="quiz-card-icon">📅</div>
                     <div class="new-badge">Yangi</div>
                     <h3>Kun Savoli</h3>
                     <p>Har kuni yangilanadigan yangi va qiziqarli savollar.</p>
-                    <button class="quiz-card-btn">Boshlash</button>
+                    <button class="quiz-card-btn" onclick="startQuiz('daily'); event.stopPropagation();">Boshlash</button>
                 </div>
             </div>
 
@@ -1005,7 +1005,7 @@
     <!-- JAVASCRIPT -->
     <script>
         // ===== DATA =====
-        const quizData = [
+        const tagsQuizData = [
             {
                 question: "🎯 Qaysi teg sahifaning bosh qismini ifodalaydi?",
                 options: ["<head>", "<body>", "<title>", "<header>"],
@@ -1027,19 +1027,9 @@
                 correct: 1
             },
             {
-                question: "🔗 Havola yaratish uchun qaysi atribut ishlatiladi?",
-                options: ["src", "link", "href", "url"],
-                correct: 2
-            },
-            {
                 question: "📧 Email inputni qanday qilib o'z ichiga olish mumkin?",
                 options: ['<input type="email">', '<input email>', '<input type="mail">', '<email>'],
                 correct: 0
-            },
-            {
-                question: "⚠️ Inputni majburiy qilish uchun qaysi atribut ishlatiladi?",
-                options: ["must", "required", "need", "force"],
-                correct: 1
             },
             {
                 question: "📋 Qaysi teg ro'yxat yaratadi?",
@@ -1052,19 +1042,9 @@
                 correct: 1
             },
             {
-                question: "🎨 Rasm uchun alt atributi nima uchun?",
-                options: ["Rasm rangini o'zgartiradі", "Rasm ko'rinmasa matn ko'rsatadi", "Rasm o'lchamini belgilaydi", "Rasm siqish uchun"],
-                correct: 1
-            },
-            {
                 question: "🔤 <p> tegi nima uchun ishlatiladi?",
                 options: ["Sarlavha", "Paragraf", "Rasm", "Havola"],
                 correct: 1
-            },
-            {
-                question: "📱 Mobil qurilmalarda meta tag qanday yoziladi?",
-                options: ['<meta viewport>', '<meta mobile>', '<meta device>', '<meta responsive>'],
-                correct: 0
             },
             {
                 question: "🎬 Video qo'shish uchun qaysi teg ishlatiladi?",
@@ -1122,25 +1102,99 @@
                 correct: 1
             },
             {
+                question: "🎁 <label> tegi qaysi elementga bog'lanadi?",
+                options: ["<p>", "<input>", "<form>", "<section>"],
+                correct: 1
+            }
+        ];
+
+        const attrsQuizData = [
+            {
+                question: "🔗 Havola yaratish uchun qaysi atribut ishlatiladi?",
+                options: ["src", "link", "href", "url"],
+                correct: 2
+            },
+            {
+                question: "⚠️ Inputni majburiy qilish uchun qaysi atribut ishlatiladi?",
+                options: ["must", "required", "need", "force"],
+                correct: 1
+            },
+            {
+                question: "🎨 Rasm uchun alt atributi nima uchun?",
+                options: ["Rasm rangini o'zgartiradі", "Rasm ko'rinmasa matn ko'rsatadi", "Rasm o'lchamini belgilaydi", "Rasm siqish uchun"],
+                correct: 1
+            },
+            {
+                question: "📱 Mobil qurilmalarda viewport meta tagini sozlash uchun qaysi atribut ishlatiladi?",
+                options: ["content", "name", "charset", "http-equiv"],
+                correct: 0
+            },
+            {
                 question: "🔗 <a> tegida href atributi nima?",
                 options: ["Rang", "O'lcham", "Havola manzili", "Matn stili"],
                 correct: 2
             },
             {
-                question: "🎁 <label> tegi qaysi elementga bog'lanadi?",
-                options: ["<p>", "<input>", "<form>", "<section>"],
-                correct: 1
-            },
-            {
                 question: "⏱️ placeholder atributi nima uchun?",
                 options: ["Kiritilgan matn", "Yordamchi matn", "Xatolik xabari", "Muvaffaqiyat xabari"],
                 correct: 1
+            },
+            {
+                question: "🖼️ Rasmning kengligini belgilash uchun qaysi atribut ishlatiladi?",
+                options: ["size", "width", "height", "scale"],
+                correct: 1
+            },
+            {
+                question: "🔒 Kiritish maydonini faqat o'qish uchun qilish maqsadida qaysi atribut ishlatiladi?",
+                options: ["disabled", "locked", "readonly", "static"],
+                correct: 2
             }
         ];
 
+        const dailyQuizData = [
+            {
+                question: "🌐 Sahifa tilini belgilash uchun HTML-da qaysi atribut ishlatiladi?",
+                options: ["lang", "language", "locale", "meta-lang"],
+                correct: 0
+            },
+            {
+                question: "🗝️ Elementni yashirish uchun CSS-ga muqobil qaysi HTML atributi ishlatiladi?",
+                options: ["hidden", "visible", "display", "none"],
+                correct: 0
+            },
+            {
+                question: "🎯 Havolani yangi oynada/tabda ochish uchun target atributining qiymati qanday bo'lishi kerak?",
+                options: ["_blank", "_self", "_parent", "_top"],
+                correct: 0
+            },
+            {
+                question: "📥 Fayl yuklash oynasini ochish uchun inputning qaysi turi ishlatiladi?",
+                options: ["file", "submit", "image", "upload"],
+                correct: 0
+            },
+            {
+                question: "🚧 Kiritish maydonini o'chirib qo'yish (noaktiv qilish) uchun qaysi atribut ishlatiladi?",
+                options: ["disabled", "readonly", "stop", "freeze"],
+                correct: 0
+            },
+            {
+                question: "🏷️ Ro'yxat elementlari tartibini teskari qilish uchun <ol> tegi bilan qaysi atribut ishlatiladi?",
+                options: ["reversed", "reverse", "backwards", "descending"],
+                correct: 0
+            },
+            {
+                question: "💡 Input maydoniga avtomatik fokus tushishi uchun qaysi atribut qo'llaniladi?",
+                options: ["autofocus", "focus", "auto", "active"],
+                correct: 0
+            }
+        ];
+
+        let quizType = ''; // 'tags', 'attributes', 'daily'
+        let activeQuizData = [];
         let currentQuizIndex = 0;
         let score = 0;
         let tagsLearned = 0;
+        let tempQuizScore = 0;
 
         // ===== TAB SWITCHING =====
         function switchTab(tabName) {
@@ -1157,21 +1211,49 @@
                 tabElement.style.display = 'block';
             }
 
-            // Activate button
-            event.target.classList.add('active');
+            // Activate button safely without global event
+            const activeBtn = Array.from(document.querySelectorAll('.tab-btn')).find(btn => btn.getAttribute('onclick').includes(tabName));
+            if (activeBtn) {
+                activeBtn.classList.add('active');
+            }
 
             // Special handling for quiz
             if (tabName === 'quiz') {
-                currentQuizIndex = 0;
-                loadQuizQuestion();
+                backToQuizMenu();
                 document.querySelector('.quiz-container').classList.add('active');
             }
+        }
+
+        // ===== QUIZ MENU AND CONTROL FUNCTIONS =====
+        function startQuiz(type) {
+            quizType = type;
+            currentQuizIndex = 0;
+            tempQuizScore = 0;
+
+            if (type === 'tags') {
+                activeQuizData = tagsQuizData;
+            } else if (type === 'attributes') {
+                activeQuizData = attrsQuizData;
+            } else if (type === 'daily') {
+                const dateIndex = new Date().getDate() % dailyQuizData.length;
+                activeQuizData = [dailyQuizData[dateIndex]];
+            }
+
+            document.getElementById('quizMenu').style.display = 'none';
+            const quizContent = document.getElementById('quizContent');
+            quizContent.style.display = 'block';
+            loadQuizQuestion();
+        }
+
+        function backToQuizMenu() {
+            document.getElementById('quizContent').style.display = 'none';
+            document.getElementById('quizMenu').style.display = 'grid';
         }
 
         // ===== QUIZ FUNCTIONS =====
         function loadQuizQuestion() {
             const container = document.getElementById('quizContent');
-            const question = quizData[currentQuizIndex];
+            const question = activeQuizData[currentQuizIndex];
 
             let optionsHTML = '';
             question.options.forEach((option, idx) => {
@@ -1186,9 +1268,24 @@
 
             const escapedQuestion = question.question.replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
+            let quizTypeTitle = '📚 Teglar Quizi';
+            if (quizType === 'attributes') quizTypeTitle = '🎛️ Atributlar Quizi';
+            if (quizType === 'daily') {
+                const today = new Date().toLocaleDateString('uz-UZ', { day: 'numeric', month: 'long' });
+                quizTypeTitle = `📆 Kun Savoli (${today})`;
+            }
+
             container.innerHTML = `
                 <div class="quiz-question">
-                    <h3>📌 Savol ${currentQuizIndex + 1}/${quizData.length}</h3>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <span style="font-weight: 700; color: var(--accent); font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">
+                            ${quizTypeTitle}
+                        </span>
+                        <button class="quiz-card-btn" onclick="backToQuizMenu()" style="padding: 5px 12px; font-size: 12px; height: auto;">
+                            ⬅️ Menuga
+                        </button>
+                    </div>
+                    <h3>📌 Savol ${currentQuizIndex + 1}/${activeQuizData.length}</h3>
                     <p style="font-size: 16px; margin-bottom: 20px;">${escapedQuestion}</p>
                     <div class="options">
                         ${optionsHTML}
@@ -1212,15 +1309,16 @@
         function submitAnswer() {
             const selected = document.querySelector('.option.selected');
             const selectedIndex = Array.from(document.querySelectorAll('.option')).indexOf(selected);
-            const question = quizData[currentQuizIndex];
+            const question = activeQuizData[currentQuizIndex];
 
             if (selectedIndex === question.correct) {
                 score += 10;
+                tempQuizScore += 10;
                 showAchievement('✅ To\'g\'ri! +10 points');
                 selected.classList.add('selected');
                 setTimeout(() => {
                     currentQuizIndex++;
-                    if (currentQuizIndex < quizData.length) {
+                    if (currentQuizIndex < activeQuizData.length) {
                         loadQuizQuestion();
                     } else {
                         showQuizComplete();
@@ -1241,7 +1339,8 @@
 
         function showQuizComplete() {
             const container = document.getElementById('quizContent');
-            const percentage = Math.round((score / (quizData.length * 10)) * 100);
+            const maxScore = activeQuizData.length * 10;
+            const percentage = Math.round((tempQuizScore / maxScore) * 100);
             let medal = '🥇';
             if (percentage < 70) medal = '🥉';
             else if (percentage < 85) medal = '🥈';
@@ -1249,29 +1348,29 @@
             container.innerHTML = `
                 <div class="quiz-question" style="text-align: center;">
                     <h3 style="font-size: 36px; margin-bottom: 20px;">🎉 Tabriklaymiz! ${medal}</h3>
-                    <p style="font-size: 18px; margin-bottom: 10px;">Siz <span style="color: var(--accent);">${quizData.length} ta savol</span>ga javob berdingiz</p>
+                    <p style="font-size: 18px; margin-bottom: 10px;">Siz ushbu quizi muvaffaqiyatli yakunladingiz</p>
                     <p style="font-size: 24px; color: var(--success); margin-bottom: 10px;">
-                        ✅ To'g'ri: <span style="font-weight: 700;">${Math.round(score / 10)} / ${quizData.length}</span>
+                        ✅ To'g'ri: <span style="font-weight: 700;">${Math.round(tempQuizScore / 10)} / ${activeQuizData.length}</span>
                     </p>
                     <p style="font-size: 28px; color: var(--accent); margin-bottom: 20px;">
-                        📊 Jami: <span style="font-weight: 700;">${score} ochko!</span>
+                        📊 Jami: <span style="font-weight: 700;">${tempQuizScore} ochko!</span>
                     </p>
                     <p style="font-size: 16px; color: #cbd5e1; margin-bottom: 30px;">
                         Natija: <span style="color: var(--success); font-weight: 700;">${percentage}%</span>
                     </p>
-                    <button class="quiz-button" onclick="resetQuiz()" style="margin-right: 10px;">
-                        🔄 Qayta Boshlash
-                    </button>
+                    <div style="display: flex; justify-content: center; gap: 15px;">
+                        <button class="quiz-button" onclick="startQuiz('${quizType}')" style="background: var(--primary-gradient);">
+                            🔄 Qayta Boshlash
+                        </button>
+                        <button class="quiz-button" onclick="backToQuizMenu()" style="background: rgba(255,255,255,0.1); color: white; border: 2px solid rgba(255,255,255,0.2); box-shadow: none;">
+                            🏠 Bosh Menuga Qaytish
+                        </button>
+                    </div>
                 </div>
             `;
         }
 
-        function resetQuiz() {
-            currentQuizIndex = 0;
-            score = 0;
-            loadQuizQuestion();
-            updateStats();
-        }
+
 
 
 
