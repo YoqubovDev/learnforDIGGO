@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎯 HTML Teglarni Mastered Qil - Interactive Learning</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --red-group: #FF6B6B;
+            --green-group: #51CF66;
+            --blue-group: #4D96FF;
+            --yellow-group: #FFD93D;
+            --dark-bg: #0F172A;
+            --light-text: #F1F5F9;
+            --accent: #00D9FF;
+            --success: #51CF66;
+            --danger: #FF6B6B;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--dark-bg) 0%, #1a2f5a 100%);
+            color: var(--light-text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ===== HEADER ANIMATION ===== */
+        header {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid var(--accent);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            animation: slideDown 0.6s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 900;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -1px;
+        }
+
+        .stats {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+        }
+
+        .stat-badge {
+            background: rgba(0, 217, 255, 0.2);
+            border: 2px solid var(--accent);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            color: var(--accent);
+        }
+
+        .progress-ring {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-top-color: var(--accent);
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* ===== MAIN CONTENT ===== */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 60px;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .welcome-section h1 {
+            font-size: 48px;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--accent), #667eea);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .welcome-section p {
+            font-size: 18px;
+            color: #a0aec0;
+            margin-bottom: 30px;
+        }
+
+        /* ===== TABS ===== */
+        .tabs {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 40px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+            overflow-x: auto;
+            padding-bottom: 15px;
+        }
+
+        .tab-btn {
+            padding: 12px 25px;
+            background: none;
+            border: none;
+            color: #a0aec0;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+            white-space: nowrap;
+        }
+
+        .tab-btn:hover {
+            color: var(--light-text);
+        }
+
+        .tab-btn.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+
+        /* ===== TAG CATEGORIES ===== */
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .category-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 30px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            opacity: 0.1;
+            transition: all 0.3s ease;
+        }
+
+        .category-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .category-card.red::before { background: var(--red-group); }
+        .category-card.green::before { background: var(--green-group); }
+        .category-card.blue::before { background: var(--blue-group); }
+        .category-card.yellow::before { background: var(--yellow-group); }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .category-color {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .category-card.red .category-color { background: var(--red-group); }
+        .category-card.green .category-color { background: var(--green-group); }
+        .category-card.blue .category-color { background: var(--blue-group); }
+        .category-card.yellow .category-color { background: var(--yellow-group); }
+
+        .category-title {
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .category-desc {
+            color: #cbd5e1;
+            font-size: 14px;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tag-list {
+            display: grid;
+            gap: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tag-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 12px 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            border-left: 3px solid;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .tag-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+
+        .category-card.red .tag-item {
+            border-left-color: var(--red-group);
+        }
+
+        .category-card.green .tag-item {
+            border-left-color: var(--green-group);
+        }
+
+        .category-card.blue .tag-item {
+            border-left-color: var(--blue-group);
+        }
+
+        .category-card.yellow .tag-item {
+            border-left-color: var(--yellow-group);
+        }
+
+        .tag-badge {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            color: #a0aec0;
+        }
+
+        /* ===== INTERACTIVE QUIZ SECTION ===== */
+        .quiz-container {
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            display: none;
+        }
+
+        .quiz-container.active {
+            display: block;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .quiz-title {
+            font-size: 32px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .quiz-question {
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 4px solid var(--accent);
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 10px;
+        }
+
+        .quiz-question h3 {
+            margin-bottom: 15px;
+            color: var(--accent);
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .option {
+            background: rgba(255, 255, 255, 0.02);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            padding: 15px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 15px;
+            position: relative;
+            overflow: visible;
+            display: block;
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .option::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 0;
+            height: 100%;
+            background: var(--accent);
+            opacity: 0.1;
+            transition: width 0.3s ease;
+            z-index: -1;
+        }
+
+        .option:hover {
+            border-color: var(--accent);
+            background: rgba(0, 217, 255, 0.05);
+        }
+
+        .option.selected {
+            border-color: var(--success);
+            background: rgba(81, 207, 102, 0.1);
+        }
+
+        .option.wrong {
+            border-color: var(--danger);
+            background: rgba(255, 107, 107, 0.1);
+        }
+
+        .quiz-button {
+            background: var(--primary-gradient);
+            border: none;
+            color: white;
+            padding: 15px 40px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .quiz-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .quiz-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* ===== ATTRIBUTES SECTION ===== */
+        .attributes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .attr-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .attr-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--primary-gradient);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .attr-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .attr-card:hover::after {
+            transform: scaleX(1);
+        }
+
+        .attr-name {
+            font-family: 'Courier New', monospace;
+            color: var(--accent);
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .attr-desc {
+            color: #cbd5e1;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .attr-example {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 12px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            color: #51CF66;
+            overflow-x: auto;
+            border-left: 3px solid #51CF66;
+        }
+
+
+
+        /* ===== FOOTER ===== */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #64748b;
+            border-top: 2px solid rgba(255, 255, 255, 0.1);
+            margin-top: 60px;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .welcome-section h1 {
+                font-size: 32px;
+            }
+
+            .categories {
+                grid-template-columns: 1fr;
+            }
+
+            .tabs {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .stats {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+
+        /* ===== ACHIEVEMENT ANIMATION ===== */
+        .achievement {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--success);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            font-weight: 600;
+            animation: slideInUp 0.5s ease-out, slideOutDown 0.5s ease-in 3s forwards;
+            z-index: 1000;
+        }
+
+        @keyframes slideInUp {
+            from {
+                transform: translateY(100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOutDown {
+            to {
+                transform: translateY(100px);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="header-container">
+            <div class="logo">🎯 HTMLMastered</div>
+            <div class="stats">
+                <div class="stat-item">
+                    <span>Tags Learned:</span>
+                    <span class="stat-badge" id="tagsCount">0/27</span>
+                </div>
+                <div class="stat-item">
+                    <span>Score:</span>
+                    <span class="stat-badge" id="scoreCount">0 pts</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <div class="container">
+        <!-- WELCOME SECTION -->
+        <section class="welcome-section">
+            <h1>🚀 HTML Teglarini Mastered Qil</h1>
+            <p>Interaktiv o'yin va qiziqarli topshiriqlar orqali HTML, CSS va JavaScript-ni o'zlashtir!</p>
+            <p style="font-size: 14px; color: #64748b;">
+                💡 Har bir rang gurup boshqacha turdagi teglarni o'z ichiga oladi. Ularni bilib ol va topshiriqlarni bajar!
+            </p>
+        </section>
+
+        <!-- TABS -->
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('tags')">📚 Teglar</button>
+            <button class="tab-btn" onclick="switchTab('attributes')">🎛️ Atributlar</button>
+            <button class="tab-btn" onclick="switchTab('quiz')">🎯 Quiz</button>
+        </div>
+
+        <!-- TAB 1: TAGS -->
+        <section id="tab-tags" style="display: block;">
+            <div class="categories">
+                <!-- RED: TEXT TAGS -->
+                <div class="category-card red">
+                    <div class="category-header">
+                        <div class="category-color">📝</div>
+                        <div>
+                            <div class="category-title">Matn Teglar</div>
+                            <div class="category-desc">Matn bilan ishlovchi teglar</div>
+                        </div>
+                    </div>
+                    <div class="tag-list">
+                        <div class="tag-item">
+                            <span>&lt;h1&gt; ... &lt;h6&gt;</span>
+                            <span class="tag-badge">Sarlavhalar</span>
+                        </div>
+                        <div class="tag-item">
+                            <span>&lt;p&gt;</span>
+                            <span class="tag-badge">Paragraf</span>
+                        </div>
+                        <div class="tag-item">
+                            <span>&lt;strong&gt;</span>
+                            <span class="tag-badge">Qalin matn</span>
+                        </div>
+                        <div class="tag-item">
+                            <span>&lt;em&gt;</span>
+                            <span class="tag-badge">Qiya matn</span>
+                        </div>
+                        <div class="tag-item">
+                            <span>&lt;span&gt;</span>
+                            <span class="tag-badge">Qism</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GREEN: MEDIA & LINKS -->
+                <div class="category-card green">
+                    <div class="category-header">
+                        <div class="category-color">🎨</div>
+                        <div>
+                            <div class="category-title">Media & Havolalar</div>
+                            <div class="category-desc">Rasm, video va havolalar</div>
+                        </div>
+                    </div>
+                    <div class="tag-list">
+                        <div class="tag-item">
+                            <span>&lt;img&gt;</span>
+                            <span class="tag-badge">Rasm</span>
+                        </div>
+                        <div class="tag-item">
+                            <span>&lt;a&gt;</span>
+                            <span class="tag-badge">Havola</span>
+                        </div>
+                        <div class="tag-item">
+                            <span>&lt;video&gt;</span>
+                            <span class="tag-badge">Video</span>
+                        </div>
+                        <div class="tag-item">
+                            <span>&lt;audio&gt;</span>
+                            <span class="tag-badge">Audio</span>
+                        </div>
+                        <div class="tag-item">
+                            <span>&lt;svg&gt;</span>
+                            <span class="tag-badge">Grafika</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BLUE: STRUCTURE -->
+                <div class="category-card blue">
+                    <div class="category-header">
+                        <div class="category-color">🏗️</div>
+                        <div>
+                            <div class="category-title">Struktura Teglar</div>
+                            <div class="category-desc">Sahifani tuzish</div>
+                        </div>
+                    </div>
+                    <div class="tag-list">
+                        <div class="tag-item">
+                            <span>&lt;head&gt;</span>
+                            <span class="tag-badge">Bosh qism</span>
+                        </div>
+                        <div class="tag-item">
+                            <span>&lt;body&gt;</span>
+                            <span class="tag-badge">Asosiy qism</span>
+                        </div>
+                        <div class="tag-item">
+                            <span>&lt;div&gt;</span>
+                            <span class="tag-badge">Konteyner</span>
+                        </div>
+                        <div class="tag-item">
+                            <span>&lt;section&gt;</span>
+                            <span class="tag-badge">Bo'lim</span>
+                        </div>
+                        <div class="tag-item">
+                            <span>&lt;header&gt;</span>
+                            <span class="tag-badge">Bosh qism</span>
+                        </div>
+                        <div class="tag-item">
+                            <span>&lt;footer&gt;</span>
+                            <span class="tag-badge">Pastki qism</span>
+                        </div>
+                        <div class="tag-item">
+                            <span>&lt;table&gt;</span>
+                            <span class="tag-badge">Jadval</span>
+                        </div>
+                        <div class="tag-item">
+                            <span>&lt;ul&gt; / &lt;ol&gt;</span>
+                            <span class="tag-badge">Ro'yxat</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- YELLOW: FORMS & INPUT -->
+                <div class="category-card yellow">
+                    <div class="category-header">
+                        <div class="category-color">⚙️</div>
+                        <div>
+                            <div class="category-title">Forma & Kiritish</div>
+                            <div class="category-desc">Ma'lumot kiritish elementlari</div>
+                        </div>
+                    </div>
+                    <div class="tag-list">
+                        <div class="tag-item">
+                            <span>&lt;form&gt;</span>
+                            <span class="tag-badge">Forma</span>
+                        </div>
+                        <div class="tag-item">
+                            <span>&lt;input&gt;</span>
+                            <span class="tag-badge">Kiritish</span>
+                        </div>
+                        <div class="tag-item">
+                            <span>&lt;label&gt;</span>
+                            <span class="tag-badge">Belgisi</span>
+                        </div>
+                        <div class="tag-item">
+                            <span>&lt;textarea&gt;</span>
+                            <span class="tag-badge">Matn maydoni</span>
+                        </div>
+                        <div class="tag-item">
+                            <span>&lt;button&gt;</span>
+                            <span class="tag-badge">Tugma</span>
+                        </div>
+                        <div class="tag-item">
+                            <span>&lt;select&gt;</span>
+                            <span class="tag-badge">Tanlov</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SPECIAL TAGS -->
+                <div class="category-card blue">
+                    <div class="category-header">
+                        <div class="category-color">✨</div>
+                        <div>
+                            <div class="category-title">Maxsus Teglar</div>
+                            <div class="category-desc">Boshqa maxsus teglar</div>
+                        </div>
+                    </div>
+                    <div class="tag-list">
+                        <div class="tag-item">
+                            <span>&lt;title&gt;</span>
+                            <span class="tag-badge">Sahifa nomi</span>
+                        </div>
+                        <div class="tag-item">
+                            <span>&lt;meta&gt;</span>
+                            <span class="tag-badge">Metama'lumot</span>
+                        </div>
+                        <div class="tag-item">
+                            <span>&lt;link&gt;</span>
+                            <span class="tag-badge">Bog'lanish</span>
+                        </div>
+                        <div class="tag-item">
+                            <span>&lt;script&gt;</span>
+                            <span class="tag-badge">Skript</span>
+                        </div>
+                        <div class="tag-item">
+                            <span>&lt;hr&gt;</span>
+                            <span class="tag-badge">Chiziq</span>
+                        </div>
+                        <div class="tag-item">
+                            <span>&lt;br&gt;</span>
+                            <span class="tag-badge">Qator</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: ATTRIBUTES -->
+        <section id="tab-attributes" style="display: none;">
+            <div class="attributes-grid">
+                <div class="attr-card">
+                    <div class="attr-name">src</div>
+                    <div class="attr-desc">Rasm yoki manbaning manziliga ishora qiladi</div>
+                    <div class="attr-example">&lt;img src="photo.jpg"&gt;</div>
+                </div>
+
+                <div class="attr-card">
+                    <div class="attr-name">alt</div>
+                    <div class="attr-desc">Rasm ko'rinmasa, ko'rsatiladigan matn</div>
+                    <div class="attr-example">&lt;img alt="My Photo"&gt;</div>
+                </div>
+
+                <div class="attr-card">
+                    <div class="attr-name">href</div>
+                    <div class="attr-desc">Havolaning manzili (yo'nalishi)</div>
+                    <div class="attr-example">&lt;a href="page.html"&gt;</div>
+                </div>
+
+                <div class="attr-card">
+                    <div class="attr-name">placeholder</div>
+                    <div class="attr-desc">Input maydonda ko'rsatiladigan yordamchi matn</div>
+                    <div class="attr-example">&lt;input placeholder="Ism kiriting"&gt;</div>
+                </div>
+
+                <div class="attr-card">
+                    <div class="attr-name">required</div>
+                    <div class="attr-desc">Input maydoni to'ldirilishi majburiy</div>
+                    <div class="attr-example">&lt;input required&gt;</div>
+                </div>
+
+                <div class="attr-card">
+                    <div class="attr-name">readonly</div>
+                    <div class="attr-desc">Inputni o'zgartirib bo'lmaydi, faqat ko'rish</div>
+                    <div class="attr-example">&lt;input readonly&gt;</div>
+                </div>
+
+                <div class="attr-card">
+                    <div class="attr-name">type</div>
+                    <div class="attr-desc">Input turini belgilaydi (text, email, number, etc.)</div>
+                    <div class="attr-example">&lt;input type="email"&gt;</div>
+                </div>
+
+                <div class="attr-card">
+                    <div class="attr-name">value</div>
+                    <div class="attr-desc">Input elementining dastlabki qiymati</div>
+                    <div class="attr-example">&lt;input value="Default"&gt;</div>
+                </div>
+
+                <div class="attr-card">
+                    <div class="attr-name">max</div>
+                    <div class="attr-desc">Raqamli inputning maksimal qiymati</div>
+                    <div class="attr-example">&lt;input type="number" max="100"&gt;</div>
+                </div>
+
+                <div class="attr-card">
+                    <div class="attr-name">min</div>
+                    <div class="attr-desc">Raqamli inputning minimal qiymati</div>
+                    <div class="attr-example">&lt;input type="number" min="0"&gt;</div>
+                </div>
+
+                <div class="attr-card">
+                    <div class="attr-name">action</div>
+                    <div class="attr-desc">Forma yuborilganda qayta ishlanish manzili</div>
+                    <div class="attr-example">&lt;form action="submit.php"&gt;</div>
+                </div>
+
+                <div class="attr-card">
+                    <div class="attr-name">maxlength</div>
+                    <div class="attr-desc">Maksimal belgilar soni</div>
+                    <div class="attr-example">&lt;input maxlength="20"&gt;</div>
+                </div>
+
+                <div class="attr-card">
+                    <div class="attr-name">minlength</div>
+                    <div class="attr-desc">Minimal belgilar soni</div>
+                    <div class="attr-example">&lt;input minlength="5"&gt;</div>
+                </div>
+
+                <div class="attr-card">
+                    <div class="attr-name">id</div>
+                    <div class="attr-desc">Element uchun unikal identifikator</div>
+                    <div class="attr-example">&lt;div id="header"&gt;</div>
+                </div>
+
+                <div class="attr-card">
+                    <div class="attr-name">class</div>
+                    <div class="attr-desc">CSS stilini qo'llash uchun sinfi</div>
+                    <div class="attr-example">&lt;div class="container"&gt;</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: QUIZ -->
+        <section id="tab-quiz" class="quiz-container">
+            <div class="quiz-title">
+                🎯 Quiz: Teglarni Bilasizmi?
+            </div>
+            <div id="quizContent"></div>
+        </section>
+
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>🎓 HTMLMastered | Interaktiv O'rganish Platformasi | Created with 💜 for Uzbek Learners</p>
+        <p style="font-size: 12px; margin-top: 10px;">Har bir teg o'z rolini bajaradi. Ranglar orqali guruhlanishni bilib qol!</p>
+    </footer>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // ===== DATA =====
+        const quizData = [
+            {
+                question: "🎯 Qaysi teg sahifaning bosh qismini ifodalaydi?",
+                options: ["<head>", "<body>", "<title>", "<header>"],
+                correct: 0
+            },
+            {
+                question: "🖼️ Rasm qo'shish uchun qaysi teg ishlatiladi?",
+                options: ["<picture>", "<image>", "<img>", "<photo>"],
+                correct: 2
+            },
+            {
+                question: "📝 Sarlavha qo'shish uchun qaysi teg to'g'ri?",
+                options: ["<heading>", "<h1>", "<title>", "<header>"],
+                correct: 1
+            },
+            {
+                question: "📋 Forma yaratish uchun qaysi teg ishlatiladi?",
+                options: ["<input>", "<form>", "<fields>", "<data>"],
+                correct: 1
+            },
+            {
+                question: "🔗 Havola yaratish uchun qaysi atribut ishlatiladi?",
+                options: ["src", "link", "href", "url"],
+                correct: 2
+            },
+            {
+                question: "📧 Email inputni qanday qilib o'z ichiga olish mumkin?",
+                options: ['<input type="email">', '<input email>', '<input type="mail">', '<email>'],
+                correct: 0
+            },
+            {
+                question: "⚠️ Inputni majburiy qilish uchun qaysi atribut ishlatiladi?",
+                options: ["must", "required", "need", "force"],
+                correct: 1
+            },
+            {
+                question: "📋 Qaysi teg ro'yxat yaratadi?",
+                options: ["<list>", "<ul>", "<items>", "<array>"],
+                correct: 1
+            },
+            {
+                question: "🏗️ Sahifa strukturasi uchun qaysi teg ishlatiladi?",
+                options: ["<structure>", "<div>", "<frame>", "<section>"],
+                correct: 1
+            },
+            {
+                question: "🎨 Rasm uchun alt atributi nima uchun?",
+                options: ["Rasm rangini o'zgartiradі", "Rasm ko'rinmasa matn ko'rsatadi", "Rasm o'lchamini belgilaydi", "Rasm siqish uchun"],
+                correct: 1
+            },
+            {
+                question: "🔤 <p> tegi nima uchun ishlatiladi?",
+                options: ["Sarlavha", "Paragraf", "Rasm", "Havola"],
+                correct: 1
+            },
+            {
+                question: "📱 Mobil qurilmalarda meta tag qanday yoziladi?",
+                options: ['<meta viewport>', '<meta mobile>', '<meta device>', '<meta responsive>'],
+                correct: 0
+            },
+            {
+                question: "🎬 Video qo'shish uchun qaysi teg ishlatiladi?",
+                options: ["<media>", "<video>", "<clip>", "<play>"],
+                correct: 1
+            },
+            {
+                question: "🔊 Audio fayl qo'shish uchun qaysi teg?",
+                options: ["<sound>", "<music>", "<audio>", "<media>"],
+                correct: 2
+            },
+            {
+                question: "✏️ Textarea nima uchun ishlatiladi?",
+                options: ["Bir qatorli matn", "Ko'p qatorli matn", "Rasm yuklash", "Faylni tanlash"],
+                correct: 1
+            },
+            {
+                question: "🔘 <input type='checkbox'> nima uchun?",
+                options: ["Bitta tanlov", "Ko'p tanlovlar", "Matn kiriting", "Raqam kiriting"],
+                correct: 1
+            },
+            {
+                question: "🔵 <input type='radio'> nima uchun?",
+                options: ["Ko'p tanlovlar", "Bitta tanlov", "Matn kiriting", "Fayl yuklash"],
+                correct: 1
+            },
+            {
+                question: "📅 <input type='date'> nima uchun?",
+                options: ["Vaqt tanlov", "Sana tanlov", "Hafta tanlov", "Oy tanlov"],
+                correct: 1
+            },
+            {
+                question: "🔐 <input type='password'> nima uchun?",
+                options: ["Faqat raqam", "Salahlangan matn", "Parol kiritish", "Elektron pochta"],
+                correct: 2
+            },
+            {
+                question: "📊 <table> tegida qator yaratish uchun?",
+                options: ["<tr>", "<td>", "<th>", "<row>"],
+                correct: 0
+            },
+            {
+                question: "📦 <tbody> tegi nima uchun?",
+                options: ["Jadval boshi", "Jadval tanasi", "Jadval poydegori", "Jadval ustuni"],
+                correct: 1
+            },
+            {
+                question: "📍 <header> tegi sahifaning qaysi qismida?",
+                options: ["Orta", "Pastda", "Tepada", "Yon tomonida"],
+                correct: 2
+            },
+            {
+                question: "👣 <footer> tegi sahifaning qaysi qismida?",
+                options: ["Tepada", "Pastda", "Orta", "Yon tomonida"],
+                correct: 1
+            },
+            {
+                question: "🔗 <a> tegida href atributi nima?",
+                options: ["Rang", "O'lcham", "Havola manzili", "Matn stili"],
+                correct: 2
+            },
+            {
+                question: "🎁 <label> tegi qaysi elementga bog'lanadi?",
+                options: ["<p>", "<input>", "<form>", "<section>"],
+                correct: 1
+            },
+            {
+                question: "⏱️ placeholder atributi nima uchun?",
+                options: ["Kiritilgan matn", "Yordamchi matn", "Xatolik xabari", "Muvaffaqiyat xabari"],
+                correct: 1
+            }
+        ];
+
+        let currentQuizIndex = 0;
+        let score = 0;
+        let tagsLearned = 0;
+
+        // ===== TAB SWITCHING =====
+        function switchTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('[id^="tab-"]').forEach(el => el.style.display = 'none');
+            document.querySelectorAll('.quiz-container').forEach(el => el.classList.remove('active'));
+
+            // Remove active class from all buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+
+            // Show selected tab
+            const tabElement = document.getElementById(`tab-${tabName}`);
+            if (tabElement) {
+                tabElement.style.display = 'block';
+            }
+
+            // Activate button
+            event.target.classList.add('active');
+
+            // Special handling for quiz
+            if (tabName === 'quiz') {
+                currentQuizIndex = 0;
+                loadQuizQuestion();
+                document.querySelector('.quiz-container').classList.add('active');
+            }
+        }
+
+        // ===== QUIZ FUNCTIONS =====
+        function loadQuizQuestion() {
+            const container = document.getElementById('quizContent');
+            const question = quizData[currentQuizIndex];
+
+            let optionsHTML = '';
+            question.options.forEach((option, idx) => {
+                const escapedOption = option.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                optionsHTML += `
+                    <div class="option" data-index="${idx}" onclick="selectAnswer(${idx})">
+                        <input type="radio" name="answer" value="${idx}" style="margin-right: 10px;">
+                        ${escapedOption}
+                    </div>
+                `;
+            });
+
+            const escapedQuestion = question.question.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+            container.innerHTML = `
+                <div class="quiz-question">
+                    <h3>📌 Savol ${currentQuizIndex + 1}/${quizData.length}</h3>
+                    <p style="font-size: 16px; margin-bottom: 20px;">${escapedQuestion}</p>
+                    <div class="options">
+                        ${optionsHTML}
+                    </div>
+                    <button class="quiz-button" id="submitBtn" onclick="submitAnswer()" disabled>
+                        ✅ Javobni Yuborish
+                    </button>
+                </div>
+            `;
+        }
+
+        function selectAnswer(idx) {
+            // Remove previous selection
+            document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+            // Add selection to clicked option
+            document.querySelectorAll('.option')[idx].classList.add('selected');
+            // Enable submit button
+            document.getElementById('submitBtn').disabled = false;
+        }
+
+        function submitAnswer() {
+            const selected = document.querySelector('.option.selected');
+            const selectedIndex = Array.from(document.querySelectorAll('.option')).indexOf(selected);
+            const question = quizData[currentQuizIndex];
+
+            if (selectedIndex === question.correct) {
+                score += 10;
+                showAchievement('✅ To\'g\'ri! +10 points');
+                selected.classList.add('selected');
+                setTimeout(() => {
+                    currentQuizIndex++;
+                    if (currentQuizIndex < quizData.length) {
+                        loadQuizQuestion();
+                    } else {
+                        showQuizComplete();
+                    }
+                }, 1500);
+            } else {
+                selected.classList.add('wrong');
+                showAchievement('❌ Noto\'g\'ri! Yana harakat qiling');
+                setTimeout(() => {
+                    selected.classList.remove('wrong');
+                    selected.classList.remove('selected');
+                    document.getElementById('submitBtn').disabled = true;
+                }, 1500);
+            }
+
+            updateStats();
+        }
+
+        function showQuizComplete() {
+            const container = document.getElementById('quizContent');
+            const percentage = Math.round((score / (quizData.length * 10)) * 100);
+            let medal = '🥇';
+            if (percentage < 70) medal = '🥉';
+            else if (percentage < 85) medal = '🥈';
+
+            container.innerHTML = `
+                <div class="quiz-question" style="text-align: center;">
+                    <h3 style="font-size: 36px; margin-bottom: 20px;">🎉 Tabriklaymiz! ${medal}</h3>
+                    <p style="font-size: 18px; margin-bottom: 10px;">Siz <span style="color: var(--accent);">${quizData.length} ta savol</span>ga javob berdingiz</p>
+                    <p style="font-size: 24px; color: var(--success); margin-bottom: 10px;">
+                        ✅ To'g'ri: <span style="font-weight: 700;">${Math.round(score / 10)} / ${quizData.length}</span>
+                    </p>
+                    <p style="font-size: 28px; color: var(--accent); margin-bottom: 20px;">
+                        📊 Jami: <span style="font-weight: 700;">${score} ochko!</span>
+                    </p>
+                    <p style="font-size: 16px; color: #cbd5e1; margin-bottom: 30px;">
+                        Natija: <span style="color: var(--success); font-weight: 700;">${percentage}%</span>
+                    </p>
+                    <button class="quiz-button" onclick="resetQuiz()" style="margin-right: 10px;">
+                        🔄 Qayta Boshlash
+                    </button>
+                </div>
+            `;
+        }
+
+        function resetQuiz() {
+            currentQuizIndex = 0;
+            score = 0;
+            loadQuizQuestion();
+            updateStats();
+        }
+
+
+
+        // ===== STATS =====
+        function updateStats() {
+            tagsLearned = Math.min(27, Math.floor(score / 10) * 2);
+            document.getElementById('tagsCount').textContent = `${tagsLearned}/27`;
+            document.getElementById('scoreCount').textContent = `${score} pts`;
+        }
+
+        // ===== ACHIEVEMENT NOTIFICATION =====
+        function showAchievement(message) {
+            const achievement = document.createElement('div');
+            achievement.className = 'achievement';
+            achievement.textContent = message;
+            document.body.appendChild(achievement);
+            setTimeout(() => achievement.remove(), 3500);
+        }
+
+
+        // Initialize
+        updateStats();
+    </script>
+</body>
+</html>
