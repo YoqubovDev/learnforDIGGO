@@ -1328,6 +1328,9 @@
         let score = 0;
         let tagsLearned = 0;
         let tempQuizScore = 0;
+        let timeLeft = 60;
+        let timerInterval = null;
+        let answered = false;
 
         // ===== TAB SWITCHING =====
         function switchTab(tabName) {
@@ -1359,6 +1362,9 @@
 
         // ===== QUIZ MENU AND CONTROL FUNCTIONS =====
         function startQuiz(type) {
+            // Clear any existing timer
+            if (timerInterval) clearInterval(timerInterval);
+
             quizType = type;
             currentQuizIndex = 0;
             tempQuizScore = 0;
@@ -1381,14 +1387,22 @@
         }
 
         function backToQuizMenu() {
+            // Clear timer
+            if (timerInterval) clearInterval(timerInterval);
+            
             document.getElementById('quizContent').style.display = 'none';
             document.getElementById('quizMenu').style.display = 'grid';
         }
 
         // ===== QUIZ FUNCTIONS =====
         function loadQuizQuestion() {
+            // Stop any existing timer
+            if (timerInterval) clearInterval(timerInterval);
+
             const container = document.getElementById('quizContent');
             const question = activeQuizData[currentQuizIndex];
+            answered = false;
+            timeLeft = 60;
 
             let optionsHTML = '';
             question.options.forEach((option, idx) => {
@@ -1413,14 +1427,22 @@
 
             container.innerHTML = `
                 <div class="quiz-question">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                        <span style="font-weight: 700; color: var(--accent); font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">
-                            ${quizTypeTitle}
-                        </span>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <div>
+                            <span style="font-weight: 700; color: var(--accent); font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">
+                                ${quizTypeTitle}
+                            </span>
+                        </div>
                         <button class="quiz-card-btn" onclick="backToQuizMenu()" style="padding: 5px 12px; font-size: 12px; height: auto;">
                             ⬅️ Menuga
                         </button>
                     </div>
+
+                    <!-- TIMER DISPLAY -->
+                    <div id="timerDisplay" style="background: linear-gradient(135deg, rgba(81, 207, 102, 0.2), rgba(0, 217, 255, 0.2)); border: 3px solid var(--success); border-radius: 15px; padding: 25px; text-align: center; margin-bottom: 25px; font-weight: 900; font-size: 48px; color: var(--success); letter-spacing: 2px; font-family: 'Courier New', monospace; min-height: 100px; display: flex; align-items: center; justify-content: center;">
+                        ⏱️ 60
+                    </div>
+
                     <h3>📌 Savol ${currentQuizIndex + 1}/${activeQuizData.length}</h3>
                     <p style="font-size: 16px; margin-bottom: 20px;">${escapedQuestion}</p>
                     <div class="options">
@@ -1431,9 +1453,64 @@
                     </button>
                 </div>
             `;
+
+            // Start the timer
+            startTimer();
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                const timerDisplay = document.getElementById('timerDisplay');
+                
+                if (timeLeft > 10) {
+                    timerDisplay.style.color = 'var(--success)';
+                } else if (timeLeft > 0) {
+                    timerDisplay.style.color = 'var(--yellow-group)';
+                    timerDisplay.innerHTML = `⏱️ ${timeLeft} sekund 🔔`;
+                } else {
+                    timerDisplay.style.color = 'var(--danger)';
+                    timerDisplay.innerHTML = '⏱️ 0 sekund 🔴';
+                }
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    timeoutAnswer();
+                }
+            }, 1000);
+        }
+
+        function timeoutAnswer() {
+            if (answered) return; // Don't process if already answered
+            
+            answered = true;
+            const selected = document.querySelector('.option.selected');
+            
+            // Mark as incorrect due to timeout
+            showAchievement('❌ Vaqt tugadi! Javob noto\'g\'ri hisoblanadi');
+            
+            // Disable all options and button
+            document.querySelectorAll('.option').forEach(opt => {
+                opt.style.pointerEvents = 'none';
+                opt.style.opacity = '0.6';
+            });
+            document.getElementById('submitBtn').disabled = true;
+
+            setTimeout(() => {
+                currentQuizIndex++;
+                if (currentQuizIndex < activeQuizData.length) {
+                    loadQuizQuestion();
+                } else {
+                    showQuizComplete();
+                }
+            }, 2000);
+
+            updateStats();
         }
 
         function selectAnswer(idx) {
+            if (answered) return; // Don't allow selection after answer is submitted
+            
             // Remove previous selection
             document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
             // Add selection to clicked option
@@ -1443,6 +1520,12 @@
         }
 
         function submitAnswer() {
+            if (answered) return; // Prevent double submission
+            answered = true;
+
+            // Stop timer
+            if (timerInterval) clearInterval(timerInterval);
+
             const selected = document.querySelector('.option.selected');
             const selectedIndex = Array.from(document.querySelectorAll('.option')).indexOf(selected);
             const question = activeQuizData[currentQuizIndex];
@@ -1466,7 +1549,12 @@
                 setTimeout(() => {
                     selected.classList.remove('wrong');
                     selected.classList.remove('selected');
-                    document.getElementById('submitBtn').disabled = true;
+                    currentQuizIndex++;
+                    if (currentQuizIndex < activeQuizData.length) {
+                        loadQuizQuestion();
+                    } else {
+                        showQuizComplete();
+                    }
                 }, 1500);
             }
 
