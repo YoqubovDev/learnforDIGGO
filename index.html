@@ -1459,25 +1459,41 @@
         }
 
         function startTimer() {
+            // Show initial timer
+            updateTimerDisplay();
+
             timerInterval = setInterval(() => {
                 timeLeft--;
-                const timerDisplay = document.getElementById('timerDisplay');
-                
-                if (timeLeft > 10) {
-                    timerDisplay.style.color = 'var(--success)';
-                } else if (timeLeft > 0) {
-                    timerDisplay.style.color = 'var(--yellow-group)';
-                    timerDisplay.innerHTML = `⏱️ ${timeLeft} sekund 🔔`;
-                } else {
-                    timerDisplay.style.color = 'var(--danger)';
-                    timerDisplay.innerHTML = '⏱️ 0 sekund 🔴';
-                }
+                updateTimerDisplay();
 
                 if (timeLeft <= 0) {
                     clearInterval(timerInterval);
                     timeoutAnswer();
                 }
             }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const timerDisplay = document.getElementById('timerDisplay');
+            if (!timerDisplay) return;
+
+            // Display the countdown number
+            if (timeLeft > 10) {
+                timerDisplay.style.color = 'var(--success)';
+                timerDisplay.style.borderColor = 'var(--success)';
+                timerDisplay.style.background = 'linear-gradient(135deg, rgba(81, 207, 102, 0.2), rgba(0, 217, 255, 0.2))';
+                timerDisplay.innerHTML = `⏱️ ${timeLeft}`;
+            } else if (timeLeft > 0) {
+                timerDisplay.style.color = 'var(--yellow-group)';
+                timerDisplay.style.borderColor = 'var(--yellow-group)';
+                timerDisplay.style.background = 'linear-gradient(135deg, rgba(255, 217, 61, 0.2), rgba(255, 159, 67, 0.2))';
+                timerDisplay.innerHTML = `⏱️ ${timeLeft} 🔔`;
+            } else {
+                timerDisplay.style.color = 'var(--danger)';
+                timerDisplay.style.borderColor = 'var(--danger)';
+                timerDisplay.style.background = 'linear-gradient(135deg, rgba(255, 107, 107, 0.3), rgba(255, 107, 107, 0.1))';
+                timerDisplay.innerHTML = `⏱️ 0 🔴`;
+            }
         }
 
         function timeoutAnswer() {
