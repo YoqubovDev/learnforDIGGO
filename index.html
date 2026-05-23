@@ -17,6 +17,7 @@
             --green-group: #51CF66;
             --blue-group: #4D96FF;
             --yellow-group: #FFD93D;
+            --orange-group: #FF9F43;
             --dark-bg: #0F172A;
             --light-text: #F1F5F9;
             --accent: #00D9FF;
@@ -222,6 +223,7 @@
         .category-card.green::before { background: var(--green-group); }
         .category-card.blue::before { background: var(--blue-group); }
         .category-card.yellow::before { background: var(--yellow-group); }
+        .category-card.orange::before { background: var(--orange-group); }
 
         .category-header {
             display: flex;
@@ -247,6 +249,7 @@
         .category-card.green .category-color { background: var(--green-group); }
         .category-card.blue .category-color { background: var(--blue-group); }
         .category-card.yellow .category-color { background: var(--yellow-group); }
+        .category-card.orange .category-color { background: var(--orange-group); }
 
         .category-title {
             font-size: 22px;
@@ -301,6 +304,10 @@
 
         .category-card.yellow .tag-item {
             border-left-color: var(--yellow-group);
+        }
+
+        .category-card.orange .tag-item {
+            border-left-color: var(--orange-group);
         }
 
         .tag-badge {
@@ -647,7 +654,7 @@
             <div class="stats">
                 <div class="stat-item">
                     <span>Tags Learned:</span>
-                    <span class="stat-badge" id="tagsCount">0/27</span>
+                    <span class="stat-badge" id="tagsCount">0/36</span>
                 </div>
                 <div class="stat-item">
                     <span>Score:</span>
@@ -779,10 +786,6 @@
                             <span class="tag-badge">Pastki qism</span>
                         </div>
                         <div class="tag-item">
-                            <span>&lt;table&gt;</span>
-                            <span class="tag-badge">Jadval</span>
-                        </div>
-                        <div class="tag-item">
                             <span>&lt;ul&gt; / &lt;ol&gt;</span>
                             <span class="tag-badge">Ro'yxat</span>
                         </div>
@@ -822,6 +825,47 @@
                         <div class="tag-item">
                             <span>&lt;select&gt;</span>
                             <span class="tag-badge">Tanlov</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ORANGE: TABLE TAGS -->
+                <div class="category-card orange">
+                    <div class="category-header">
+                        <div class="category-color">📊</div>
+                        <div>
+                            <div class="category-title">Jadval Teglari</div>
+                            <div class="category-desc">Ma'lumotlarni jadval shaklida ko'rsatish</div>
+                        </div>
+                    </div>
+                    <div class="tag-list">
+                        <div class="tag-item">
+                            <span>&lt;table&gt;</span>
+                            <span class="tag-badge">Jadval</span>
+                        </div>
+                        <div class="tag-item">
+                            <span>&lt;thead&gt;</span>
+                            <span class="tag-badge">Jadval boshi</span>
+                        </div>
+                        <div class="tag-item">
+                            <span>&lt;tbody&gt;</span>
+                            <span class="tag-badge">Jadval tanasi</span>
+                        </div>
+                        <div class="tag-item">
+                            <span>&lt;tfoot&gt;</span>
+                            <span class="tag-badge">Jadval pastki qismi</span>
+                        </div>
+                        <div class="tag-item">
+                            <span>&lt;tr&gt;</span>
+                            <span class="tag-badge">Jadval qatori</span>
+                        </div>
+                        <div class="tag-item">
+                            <span>&lt;th&gt;</span>
+                            <span class="tag-badge">Sarlavha katagi</span>
+                        </div>
+                        <div class="tag-item">
+                            <span>&lt;td&gt;</span>
+                            <span class="tag-badge">Ma'lumot katagi</span>
                         </div>
                     </div>
                 </div>
@@ -957,6 +1001,30 @@
                     <div class="attr-desc">CSS stilini qo'llash uchun sinfi</div>
                     <div class="attr-example">&lt;div class="container"&gt;</div>
                 </div>
+
+                <div class="attr-card">
+                    <div class="attr-name">colspan</div>
+                    <div class="attr-desc">Katakning nechtadir ustunni birlashtirishini belgilaydi</div>
+                    <div class="attr-example">&lt;td colspan="2"&gt;</div>
+                </div>
+
+                <div class="attr-card">
+                    <div class="attr-name">rowspan</div>
+                    <div class="attr-desc">Katakning nechtadir qatorni birlashtirishini belgilaydi</div>
+                    <div class="attr-example">&lt;td rowspan="2"&gt;</div>
+                </div>
+
+                <div class="attr-card">
+                    <div class="attr-name">scope</div>
+                    <div class="attr-desc">Sarlavha katagi (th) ustun yoki qatorga tegishli ekanligini belgilaydi</div>
+                    <div class="attr-example">&lt;th scope="col"&gt;</div>
+                </div>
+
+                <div class="attr-card">
+                    <div class="attr-name">headers</div>
+                    <div class="attr-desc">Katakni bir yoki bir nechta sarlavha kataklari bilan bog'laydi</div>
+                    <div class="attr-example">&lt;td headers="header_id"&gt;</div>
+                </div>
             </div>
         </section>
 
@@ -973,6 +1041,13 @@
                     <h3>Teglar Quizi</h3>
                     <p>HTML teglariga oid bilimlaringizni sinab ko'ring.</p>
                     <button class="quiz-card-btn" onclick="startQuiz('tags'); event.stopPropagation();">Boshlash</button>
+                </div>
+                <div class="quiz-menu-card" onclick="startQuiz('tables')">
+                    <div class="quiz-card-icon">📊</div>
+                    <div class="new-badge">Yangi</div>
+                    <h3>Jadvallar Quizi</h3>
+                    <p>Table teglari va ularning atributlari bo'yicha bilimlaringizni sinab ko'ring.</p>
+                    <button class="quiz-card-btn" onclick="startQuiz('tables'); event.stopPropagation();">Boshlash</button>
                 </div>
                 <div class="quiz-menu-card" onclick="startQuiz('attributes')">
                     <div class="quiz-card-icon">🎛️</div>
@@ -1189,7 +1264,65 @@
             }
         ];
 
-        let quizType = ''; // 'tags', 'attributes', 'daily'
+        const tablesQuizData = [
+            {
+                question: "📊 Jadval yaratish uchun qaysi asosiy HTML tegi ishlatiladi?",
+                options: ["<grid>", "<table>", "<list>", "<tab>"],
+                correct: 1
+            },
+            {
+                question: "➕ Jadvalda yangi qator yaratish uchun qaysi teg ishlatiladi?",
+                options: ["<td>", "<th>", "<tr>", "<row>"],
+                correct: 2
+            },
+            {
+                question: "🗂️ Jadvaldagi oddiy ma'lumot katagini yaratish uchun qaysi teg ishlatiladi?",
+                options: ["<th>", "<td>", "<cell>", "<tr_cell>"],
+                correct: 1
+            },
+            {
+                question: "🖊️ Jadvalda sarlavha katagini (qalin va o'rtaga joylashadigan) yaratish uchun qaysi teg ishlatiladi?",
+                options: ["<th>", "<td>", "<title>", "<thead_cell>"],
+                correct: 0
+            },
+            {
+                question: "📦 Jadval bosh qismini (sarlavhalar guruhini) belgilash uchun qaysi teg ishlatiladi?",
+                options: ["<thead>", "<tbody>", "<tfoot>", "<header>"],
+                correct: 0
+            },
+            {
+                question: "🦴 Jadval tanasini (ma'lumot qatorlari guruhini) belgilash uchun qaysi teg ishlatiladi?",
+                options: ["<thead>", "<tbody>", "<tfoot>", "<main_table>"],
+                correct: 1
+            },
+            {
+                question: "🦶 Jadvalning pastki (xulosa) qismini belgilash uchun qaysi teg ishlatiladi?",
+                options: ["<thead>", "<tbody>", "<tfoot>", "<footer_table>"],
+                correct: 2
+            },
+            {
+                question: "↔️ Katakni bir nechta ustunga birlashtirish uchun qaysi atribut ishlatiladi?",
+                options: ["colspan", "rowspan", "span", "merge-col"],
+                correct: 0
+            },
+            {
+                question: "↕️ Katakni bir nechta qatorga birlashtirish uchun qaysi atribut ishlatiladi?",
+                options: ["colspan", "rowspan", "span", "merge-row"],
+                correct: 1
+            },
+            {
+                question: "🎯 Sarlavha katagi (th) ustun yoki qator uchun ekanligini bildirishda qaysi atribut ishlatiladi?",
+                options: ["scope", "headers", "role", "direction"],
+                correct: 0
+            },
+            {
+                question: "🔗 Katakni uning tegishli sarlavha ID-lari bilan bog'lashda qaysi atribut qo'llaniladi?",
+                options: ["headers", "id", "scope", "connect"],
+                correct: 0
+            }
+        ];
+
+        let quizType = ''; // 'tags', 'tables', 'attributes', 'daily'
         let activeQuizData = [];
         let currentQuizIndex = 0;
         let score = 0;
@@ -1232,6 +1365,8 @@
 
             if (type === 'tags') {
                 activeQuizData = tagsQuizData;
+            } else if (type === 'tables') {
+                activeQuizData = tablesQuizData;
             } else if (type === 'attributes') {
                 activeQuizData = attrsQuizData;
             } else if (type === 'daily') {
@@ -1269,6 +1404,7 @@
             const escapedQuestion = question.question.replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
             let quizTypeTitle = '📚 Teglar Quizi';
+            if (quizType === 'tables') quizTypeTitle = '📊 Jadvallar Quizi';
             if (quizType === 'attributes') quizTypeTitle = '🎛️ Atributlar Quizi';
             if (quizType === 'daily') {
                 const today = new Date().toLocaleDateString('uz-UZ', { day: 'numeric', month: 'long' });
@@ -1376,8 +1512,9 @@
 
         // ===== STATS =====
         function updateStats() {
-            tagsLearned = Math.min(27, Math.floor(score / 10) * 2);
-            document.getElementById('tagsCount').textContent = `${tagsLearned}/27`;
+            const totalTags = 36;
+            tagsLearned = Math.min(totalTags, Math.floor(score / 10) * 2);
+            document.getElementById('tagsCount').textContent = `${tagsLearned}/${totalTags}`;
             document.getElementById('scoreCount').textContent = `${score} pts`;
         }
 
